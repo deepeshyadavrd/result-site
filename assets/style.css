@@ -1,0 +1,4 @@
+/* Custom overrides (Bootstrap is used for base styling) */
+body { background:#f6f7fb; color:#222; }
+.container-card { background:#fff; padding:18px; border-radius:8px; box-shadow:0 6px 24px rgba(0,0,0,.06); margin-top:24px; }
+.today-box { background:#fff8e1; padding:12px; border-radius:6px; border:1px solid #f0e2b8; margin-bottom:16px;}
