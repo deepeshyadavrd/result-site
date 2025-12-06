@@ -56,7 +56,7 @@ foreach ($monthResults as $r) {
 
 <body class="container mt-5">
 
-<h2 class="mb-3">Last 2 Days Result</h2>
+<h2 class="mb-3">Latest Result</h2>
 
 <table class="table table-bordered">
 <thead>
@@ -81,7 +81,7 @@ foreach ($monthResults as $r) {
     </td>
 
     <td>
-        <a class="btn btn-sm btn-primary" href="view_month.php?game_id=<?php echo $g['id']; ?>">
+        <a class="btn btn-sm btn-primary" href="single_game.php?game_id=<?php echo $g['id']; ?>">
             View
         </a>
     </td>
@@ -130,7 +130,7 @@ for ($i = 0; $i < $todayDay; $i++):
 
 <h3>Select Month & Year</h3>
 
-<form method="GET" action="chart.php" class="row g-3">
+<form method="GET" action="all_games.php" class="row g-3">
 
 <div class="col-md-3">
     <label>Month</label>
