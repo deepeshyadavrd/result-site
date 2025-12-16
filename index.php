@@ -51,7 +51,17 @@ $recentTime = "No results declared yet";
 if ($result && $row = $result->fetchAll()) {
     $recentTime = date("F j, Y - g:i A", strtotime($row[0]['created_at']));
 }
+//next pver
+$month = isset($_GET['month']) ? (int)$_GET['month'] : (int)date('m');
+$year  = isset($_GET['year'])  ? (int)$_GET['year']  : (int)date('Y');
 
+$current = DateTime::createFromFormat('Y-m', "$year-$month");
+
+$prev = clone $current;
+$prev->modify('-1 month');
+
+$next = clone $current;
+$next->modify('+1 month');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -124,131 +134,133 @@ if ($result && $row = $result->fetchAll()) {
 </head>
 
 <body class="container mt-5">
-<header class="header">
-    <div class="logo">Japan King</div>
+    <div class="container">
+        <header class="header">
+            <div class="logo">Japan King</div>
+            <div>Daily Superfast Satta King Result of 13th December 2025 And Leak Numbers for Gali, Desawar, Ghaziabad and Faridabad With Complete Old Satta King Chart of 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2023, 2024, 2025 From Satta King Fast, Satta King Ghaziabad, Satta King Desawar, Satta King Gali, Satta King Faridabad.</div>
+            <div class="pink-bg">DISCLAIMER: This website is an independent media portal for informational and journalistic purposes only. As a non-transactional service, we are not affiliated with any entity mentioned. Users are solely responsible for complying with all applicable laws in their jurisdiction.</div>
+            <div class="recent-time">Recent Result Time: <?php echo $recentTime; ?></div>
+        </header>
+        <section>
+            <h2 class="mb-3">Latest Result</h2>
 
-    <div>Daily Superfast Satta King Result of 13th December 2025 And Leak Numbers for Gali, Desawar, Ghaziabad and Faridabad With Complete Old Satta King Chart of 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2023, 2024, 2025 From Satta King Fast, Satta King Ghaziabad, Satta King Desawar, Satta King Gali, Satta King Faridabad.</div>
-    <div class="pink-bg">DISCLAIMER: This website is an independent media portal for informational and journalistic purposes only. As a non-transactional service, we are not affiliated with any entity mentioned. Users are solely responsible for complying with all applicable laws in their jurisdiction.</div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="header1">
+                        <th colspan=4  style="text-align:center;">Results of <?php 
+                        $today1 = date("F j, Y", strtotime($today));
+                        $yesterday1 = date("F j, Y", strtotime($yesterday));
+                        echo $yesterday1;
+                        echo " & ";
+                        echo $today1; ?>
+                        </th>
+                    </tr>
+                    <tr class="header2">
+                        <th>Game</th>
+                        <th><?php 
+                        $dt = new DateTime($yesterday1);
+                        $yesterday2 = $dt->format("D. jS");
+                        echo $yesterday2; ?></th>
+                        <th><?php 
+                        $dt = new DateTime($today1);
+                        $today2 = $dt->format("D. jS");
+                        echo $today2; ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+                    foreach ($games as $g): ?>
+                        <tr>
+                        <td><h3><?php echo htmlspecialchars($g['game_name']); ?></h3><h3><a class="btn btn-sm btn-link" href="single_game.php?game_id=<?php echo $g['id']; ?>">View Record</a></h3></td>
+                        <td>
+                            <?php echo $last2Formatted[$g['id']][$yesterday] ?? "-"; ?>
+                        </td>
+                        <td>
+                            <?php echo $last2Formatted[$g['id']][$today] ?? "-"; ?>
+                        </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </section>
+        <hr class="my-5">
+        <scetion>
+            <h2>This Month's Results (Till Today)</h2>
+            
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <?php foreach ($games as $g): ?>
+                            <th><?php echo htmlspecialchars($g['game_name']); ?></th>
+                        <?php endforeach; ?>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $start = date("Y-m-01");
+                    $todayDay = date("d");
+                    for ($i = 0; $i < $todayDay; $i++):
+                        $date = date("d", strtotime("$start + $i day"));
+                    ?>
+                    <tr>
+                        <td><?php echo $date; ?></td>
+                        <?php foreach ($games as $g): ?>
+                            <td>
+                                <?php echo $monthFormatted[$date][$g['id']] ?? "-"; ?>
+                            </td>
+                        <?php endforeach; ?>
+                    </tr>
+                    <?php endfor; ?>
+                </tbody>
+            </table>
+            <div style="display:flex;justify-content: space-between; margin:20px 0;">
+                <a href="all_games.php?month=<?php echo $prev->format('m'); ?>&year=<?php echo $prev->format('Y'); ?>" class="btn btn-primary">
+                <?php echo $prev->format('F Y'); ?>
+                </a>
+                
+                &nbsp;&nbsp;&nbsp;
+                
+                <a href="all_games.php?month=<?php echo $next->format('m'); ?>&year=<?php echo $next->format('Y'); ?>" class="btn btn-primary">
+                <?php echo $next->format('F Y'); ?>
+                </a>
+            </div>
+        </scetion>    
+            <hr class="my-5">
+            <section>
+    <h3>Select Month & Year</h3>
 
-    <div class="recent-time">Recent Result Time: <?php echo $recentTime; ?></div>
-</header>
-<h2 class="mb-3">Latest Result</h2>
+    <form method="GET" action="all_games.php" class="row g-2 align-items-center">
 
-<table class="table table-bordered">
-<thead>
-    <tr class="header1">
-        <th colspan=4  style="text-align:center;">Results of <?php 
-        
-        $today1 = date("F j, Y", strtotime($today));
-        $yesterday1 = date("F j, Y", strtotime($yesterday));
-        echo $yesterday1;
-        echo " & ";
-        echo $today1; 
-        // Output: December 10, 2025echo $today; ?></th>
-    </tr>
-<tr class="header2">
-    <th>Game</th>
-    <th><?php 
-    $dt = new DateTime($yesterday1);
-    $yesterday2 = $dt->format("D. jS");
-    echo $yesterday2; ?></th>
-    <th><?php 
-    $dt = new DateTime($today1);
-    $today2 = $dt->format("D. jS");
-    echo $today2; ?></th>
-    <!-- <th>Full Month</th> -->
-</tr>
-</thead>
-<tbody>
-<?php 
-// print_r($last2Formatted);
-foreach ($games as $g): ?>
-<tr>
-    <td><h3><?php echo htmlspecialchars($g['game_name']); ?></h3><h3><a class="btn btn-sm btn-link" href="single_game.php?game_id=<?php echo $g['id']; ?>">View Record</a></h3></td>
+        <!-- Month -->
+        <div class="col-6 col-md-4">
+            <select name="month" class="form-control">
+                <?php for ($m = 1; $m <= 12; $m++): ?>
+                    <option value="<?= $m ?>">
+                        <?= date("F", mktime(0,0,0,$m,1)) ?>
+                    </option>
+                <?php endfor; ?>
+            </select>
+        </div>
 
-    <td>
-        <?php echo $last2Formatted[$g['id']][$yesterday] ?? "-"; ?>
-    </td>
+        <!-- Year -->
+        <div class="col-6 col-md-4">
+            <select name="year" class="form-control">
+                <?php for ($y = date("Y")-5; $y <= date("Y"); $y++): ?>
+                    <option value="<?= $y ?>"><?= $y ?></option>
+                <?php endfor; ?>
+            </select>
+        </div>
 
-    <td>
-        <?php echo $last2Formatted[$g['id']][$today] ?? "-"; ?>
-    </td>
+        <!-- Button -->
+        <div class="col-12 col-md-4">
+            <button class="btn btn-success w-100">
+                Get Results
+            </button>
+        </div>
 
-    <!-- <td>
-        <a class="btn btn-sm btn-primary" href="single_game.php?game_id=<?php echo $g['id']; ?>">
-            View
-        </a>
-    </td> -->
-</tr>
-<?php endforeach; ?>
-</tbody>
-</table>
-
-<hr class="my-5">
-
-<h2>This Month's Results (Till Today)</h2>
-
-<table class="table table-bordered">
-<thead>
-<tr>
-    <th>Date</th>
-    <?php foreach ($games as $g): ?>
-        <th><?php echo htmlspecialchars($g['game_name']); ?></th>
-    <?php endforeach; ?>
-</tr>
-</thead>
-<tbody>
-
-<?php
-$start = date("Y-m-01");
-$todayDay = date("d");
-
-for ($i = 0; $i < $todayDay; $i++):
-    $date = date("Y-m-d", strtotime("$start + $i day"));
-?>
-<tr>
-    <td><?php echo $date; ?></td>
-
-    <?php foreach ($games as $g): ?>
-        <td>
-            <?php echo $monthFormatted[$date][$g['id']] ?? "-"; ?>
-        </td>
-    <?php endforeach; ?>
-
-</tr>
-<?php endfor; ?>
-</tbody>
-</table>
-
-<hr class="my-5">
-
-<h3>Select Month & Year</h3>
-
-<form method="GET" action="all_games.php" class="row g-3">
-
-<div class="col-md-3">
-    <label>Month</label>
-    <select name="month" class="form-control">
-        <?php for ($m = 1; $m <= 12; $m++): ?>
-            <option value="<?= $m ?>"><?= date("F", mktime(0,0,0,$m,1)) ?></option>
-        <?php endfor; ?>
-    </select>
-</div>
-
-<div class="col-md-3">
-    <label>Year</label>
-    <select name="year" class="form-control">
-        <?php for ($y = date("Y")-5; $y <= date("Y"); $y++): ?>
-            <option value="<?= $y ?>"><?= $y ?></option>
-        <?php endfor; ?>
-    </select>
-</div>
-
-<div class="col-md-3 align-self-end">
-    <button class="btn btn-success">Get Results</button>
-</div>
-
-</form>
-
+    </form>
+</section>   
+    </div>
 </body>
 </html>

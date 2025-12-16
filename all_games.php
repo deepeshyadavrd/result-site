@@ -42,11 +42,25 @@ foreach ($rows as $r) {
 }
 
 $daysInMonth = date("t", strtotime("$year-$month-01"));
+
+//next prev
+// $month = isset($_GET['month']) ? (int)$_GET['month'] : (int)date('m');
+// $year  = isset($_GET['year'])  ? (int)$_GET['year']  : (int)date('Y');
+
+$current = DateTime::createFromFormat('Y-m', "$year-$month");
+
+$prev = clone $current;
+$prev->modify('-1 month');
+
+$next = clone $current;
+$next->modify('+1 month');
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 <title>All Games - Result</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 
@@ -120,7 +134,7 @@ $daysInMonth = date("t", strtotime("$year-$month-01"));
 
 <tbody>
 <?php for ($d=1; $d<=$daysInMonth; $d++): 
-    $date = sprintf("%04d-%02d-%02d", $year, $month, $d);
+    $date = sprintf( $d);
 ?>
 <tr>
 <td><?= $date ?></td>
@@ -133,6 +147,16 @@ $daysInMonth = date("t", strtotime("$year-$month-01"));
 <?php endfor; ?>
 </tbody>
 </table>
+<div style="display:flex;justify-content: space-between; margin:20px 0;">
+    <a href="all_games.php?month=<?php echo $prev->format('m'); ?>&year=<?php echo $prev->format('Y'); ?>" class="btn btn-primary">
+    <?php echo $prev->format('F Y'); ?>
+    </a>
 
+    &nbsp;&nbsp;&nbsp;
+
+    <a href="all_games.php?month=<?php echo $next->format('m'); ?>&year=<?php echo $next->format('Y'); ?>" class="btn btn-primary">
+    <?php echo $next->format('F Y'); ?>
+    </a>
+</div>
 </body>
 </html>
